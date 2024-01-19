@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+void displayList(const vector<string>& todoList) {
+    cout<<"To-Do List:\n";
+    for(size_t i=0;i<todoList.size();++i) {
+        cout<<i+1<<"."<<todoList[i]<<endl;
+    }
+    cout<<endl;
+}
+
+int main() {
+    vector<string> todoList;
+    int choice;
+
+    do {
+        cout<<"Menu:\n";
+        cout<<"1. Add task\n";
+        cout<<"2. Remove task\n";
+        cout<<"3. Display tasks\n";
+        cout<<"4. Exit\n";
+        cout<<"Enter your choice (1-4): ";
+        cin>>choice;
+
+        switch (choice) {
+            case 1:
+                {
+                    string task;
+                    cout<<"Enter the task:";
+                    cin.ignore();
+                    getline(cin,task);
+                    todoList.push_back(task);
+                    cout<<"Task added successfully!\n\n";
+                }
+                break;
+            case 2:
+                {
+                    if (!todoList.empty()) {
+                        int index;
+                        displayList(todoList);
+                        cout<<"Enter the task number to remove:";
+                        cin>>index;
+                        if (index >= 1 && static_cast<size_t>(index) <= todoList.size()) {
+                            todoList.erase(todoList.begin() + index - 1);
+                            cout<<"Task removed successfully!\n\n";
+                        } else {
+                            cout<<"Invalid task number.\n\n";
+                        }
+                    } else {
+                        cout<<"The to-do list is empty.\n\n";
+                    }
+                }
+                break;
+            case 3:
+                if(!todoList.empty()) {
+                    displayList(todoList);
+                } else {
+                    cout<<"The to-do list is empty.\n\n";
+                }
+                break;
+            case 4:
+                cout<< "Exiting the program. Goodbye!\n";
+                break;
+            default:
+                cout<< "Invalid choice. Please enter a number between 1 and 4.\n\n";
+        }
+    } while (choice != 4);
+
+    return 0;
+}
